@@ -7,7 +7,7 @@ app.use(cors())
 app.use(express.json())
 // app.use(express.urlencoded({ extended: false }))
 
-const port = 5555
+const port = 1606
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
