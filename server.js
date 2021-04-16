@@ -4,6 +4,8 @@ require('dotenv').config()
 
 const app = express()
 app.use(cors())
+app.use(express.json())
+// app.use(express.urlencoded({ extended: false }))
 
 const port = 5555
 
@@ -17,7 +19,13 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     console.log(err);
     const serviceCollection = client.db(`${process.env.DATABASE}`).collection("services");
+    const orederCollection = client.db(`${process.env.DATABASE}`).collection("orders");
     // perform actions on the collection object
+    app.post('/addBooking', (req, res) => {
+        orederCollection.insertOne(req.body)
+            .then(result => res.send(result.insertedCount > 0))
+        // .then(data => res.send('true'))
+    })
     // client.close();
 });
 
