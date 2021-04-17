@@ -5,9 +5,8 @@ require('dotenv').config()
 const app = express()
 app.use(cors())
 app.use(express.json())
-// app.use(express.urlencoded({ extended: false }))
 
-const port = 1606
+const port = 5555
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -21,10 +20,19 @@ client.connect(err => {
     const serviceCollection = client.db(`${process.env.DATABASE}`).collection("services");
     const orederCollection = client.db(`${process.env.DATABASE}`).collection("orders");
     // perform actions on the collection object
+
+    // Add Booking
     app.post('/addBooking', (req, res) => {
         orederCollection.insertOne(req.body)
             .then(result => res.send(result.insertedCount > 0))
         // .then(data => res.send('true'))
+    })
+
+    // Get Orderlist of User
+    app.post('/orderList', (req, res) => {
+        console.log(req.body);
+        orederCollection.find({ email: req.body.email })
+            .toArray((err, docs) => res.send(docs))
     })
     // client.close();
 });
