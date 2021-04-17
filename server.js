@@ -8,7 +8,6 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
@@ -19,27 +18,27 @@ client.connect(err => {
     console.log(err);
     const serviceCollection = client.db(`${process.env.DATABASE}`).collection("services");
     const orederCollection = client.db(`${process.env.DATABASE}`).collection("orders");
-    // perform actions on the collection object
-
+    const reviewCollection = client.db(`${process.env.DATABASE}`).collection("reviews");
     // Add Booking
     app.post('/addBooking', (req, res) => {
         orederCollection.insertOne(req.body)
             .then(result => res.send(result.insertedCount > 0))
-        // .then(data => res.send('true'))
     })
-
+    // Add Booking
+    app.post('/addReview', (req, res) => {
+        reviewCollection.insertOne(req.body)
+            .then(result => res.send(result.insertedCount > 0))
+    })
     // Get Orderlist of User
     app.post('/orderList', (req, res) => {
         console.log(req.body);
         orederCollection.find({ email: req.body.email })
             .toArray((err, docs) => res.send(docs))
     })
-    // client.close();
+    // Get Reviews
+    app.get('/reviews', (req, res) => {
+        console.log('review req recieved')
+        reviewCollection.find().toArray((err, docs) => res.send(docs))
+    })
 });
-
-
-
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(process.env.PORT || port)
