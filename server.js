@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const fs = require('fs')
 const MongoClient = require('mongodb').MongoClient;
 const fileupload = require('express-fileupload')
 require('dotenv').config()
@@ -53,17 +54,11 @@ client.connect(err => {
             })
 
     })
-    // Get Orderlist of User
-    app.post('/fullOrderList', (req, res) => {
-        console.log(req.body);
-        orderCollection.find({ 'booking.email': req.body.email })
-            .toArray((err, docs) => res.send(docs))
-    })
     // Add A Service
     app.post('/addAService', (req, res) => {
         console.log('service is adding..')
         const file = (req.files.file)
-        const sevice = req.body.service
+        const service = req.body.service
         const description = req.body.description
         const newImg = file.data;
         const encImg = newImg.toString('base64');
