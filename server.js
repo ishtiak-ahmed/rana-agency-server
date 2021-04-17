@@ -17,11 +17,11 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     console.log(err);
     const serviceCollection = client.db(`${process.env.DATABASE}`).collection("services");
-    const orederCollection = client.db(`${process.env.DATABASE}`).collection("orders");
+    const orderCollection = client.db(`${process.env.DATABASE}`).collection("orders");
     const reviewCollection = client.db(`${process.env.DATABASE}`).collection("reviews");
     // Add Booking
     app.post('/addBooking', (req, res) => {
-        orederCollection.insertOne(req.body)
+        orderCollection.insertOne(req.body)
             .then(result => res.send(result.insertedCount > 0))
     })
     // Add Booking
@@ -32,7 +32,13 @@ client.connect(err => {
     // Get Orderlist of User
     app.post('/orderList', (req, res) => {
         console.log(req.body);
-        orederCollection.find({ email: req.body.email })
+        orderCollection.find({ 'booking.email': req.body.email })
+            .toArray((err, docs) => res.send(docs))
+    })
+    // Get Orderlist of User
+    app.post('/fullOrderList', (req, res) => {
+        console.log(req.body);
+        orderCollection.find({ 'booking.email': req.body.email })
             .toArray((err, docs) => res.send(docs))
     })
     // Get Reviews
