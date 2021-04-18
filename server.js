@@ -11,10 +11,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('serviceimg'))
 app.use(fileupload())
-// app.use(fileUpload({
-//     useTempFiles: true,
-//     tempFileDir: '/tmp/'
-// }));
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -90,6 +87,14 @@ client.connect(err => {
         adminsCollection.find({ email: email })
             .toArray((err, docs) => {
                 res.send(docs.length > 0)
+            })
+    })
+    // Add Admin 
+    app.post('/addAdmin', (req, res) => {
+        const admin = req.body
+        adminsCollection.insertOne(admin)
+            .then(result => {
+                res.send(result.insertedCount > 0);
             })
     })
 });
