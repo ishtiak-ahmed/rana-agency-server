@@ -66,7 +66,7 @@ client.connect(err => {
             size: file.size,
             img: Buffer.from(encImg, 'base64')
         };
-        serviceCollection.insertOne({ sevice, description, image })
+        serviceCollection.insertOne({ service, description, image })
             .then(result => {
                 res.send(result.insertedCount > 0);
             })
