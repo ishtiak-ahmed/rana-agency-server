@@ -2,13 +2,20 @@
 
 ## Visit The Live Site [Here](https://rana-agency.web.app/)
 
-## Private Detective And Security Service
+## Private Detective And Security Service. This is my first complete MERN STACK website.
 
-### Here you can-
+## In This Project I have covered following feature
 
-- Hire a professional Driver,
-- Hire a professional Driver+Bodyguard,
-- Hire a professional Security guard for House + Office,
-- Get our fitness training
-- Self Defence Training
-- Security guard Training.
+- Firebase Authentication
+- Admin Verify
+- Add Admin Function
+- Different Dashboard for User And Admin
+- Mongodb Full CRUD operation
+- User Review system
+- Stripe Payment
+- React Use Form Validation
+- Bootstrap Framework for Responsive Layout
+- Font Awesome Icons
+- Node and Express JS
+  and
+- .env file to hide sencitive database information
